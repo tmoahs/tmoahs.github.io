@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Cultural Events Curator — automatisation IA de bout en bout · Thomas Patout</title>
+<meta name="description" content="Étude de cas : workflow n8n qui combine l'API Ticketmaster et Google Gemini pour envoyer des recommandations culturelles personnalisées par email, pour un coût nul.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand">Thomas <span>Patout</span></div>
+    <ul>
+      <li><a href="../index.html#projets">Projets</a></li>
+      <li><a href="../assets/cv-thomas-patout.pdf">CV</a></li>
+      <li><a href="https://www.linkedin.com/in/thomas-patout/">LinkedIn</a></li>
+      <li><a href="https://github.com/tmoahs">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="article">
+  <div class="wrap">
+
+    <a class="back" href="../index.html#projets">← Toutes les études de cas</a>
+
+    <h1>AI Cultural Events Curator</h1>
+    <p class="lede">
+      Un utilisateur décrit ses goûts, et reçoit dans sa boîte mail cinq événements culturels réels
+      de sa ville — chacun avec une description écrite pour lui. Le tout tourne
+      <strong>sans aucune infrastructure payante</strong>.
+    </p>
+
+    <div class="tags">
+      <span>n8n</span>
+      <span>LLM APIs</span>
+      <span>Google Gemini</span>
+      <span>Ticketmaster API</span>
+      <span>Gmail API</span>
+      <span>REST APIs</span>
+      <span>Automatisation</span>
+    </div>
+
+    <section>
+      <h2>Le problème</h2>
+      <p>
+        Trouver une sortie culturelle qui corresponde vraiment à ses goûts demande du temps :
+        on ouvre plusieurs sites, on recoupe les annonces, on retombe sur les mêmes événements,
+        et on manque d'informations pour se décider. Les recommandations proposées sont soit
+        génériques, soit noyées dans du bruit.
+      </p>
+      <p>
+        L'objectif était donc double : <strong>une recommandation réellement personnalisée</strong>,
+        et un <strong>coût d'exploitation nul</strong>. La contrainte de coût n'était pas un détail —
+        c'est elle qui a structuré toutes les décisions techniques.
+      </p>
+    </section>
+
+    <section>
+      <h2>La démarche</h2>
+      <ol class="steps">
+        <li>
+          <b>Partir du besoin, pas de la technique</b>
+          Un formulaire minimal — ville, catégorie, style artistique — sans compte à créer ni
+          application à installer. Le workflow est auto-porté par n8n, donc aucun front-end
+          à maintenir.
+        </li>
+        <li>
+          <b>Récupérer de vraies données, pas des données inventées</b>
+          Interrogation de l'<strong>API Ticketmaster</strong> pour obtenir 20 événements réels,
+          avec leurs visuels, lieux, dates et liens officiels.
+        </li>
+        <li>
+          <b>Dédupliquer pour garantir la variété</b>
+          Sur 20 résultats, beaucoup se répètent ou se ressemblent. Un filtrage ramène l'ensemble
+          à <strong>5 événements réellement distincts</strong> — sinon l'email perd tout intérêt.
+        </li>
+        <li>
+          <b>Faire appel à l'IA sans exploser le budget</b>
+          C'est la décision structurante du projet : plutôt que d'appeler Google Gemini une fois par
+          événement (5 appels), toutes les données sont agrégées et envoyées en <strong>un seul appel
+          qui génère les 5 descriptions</strong>. C'est ce qui permet de rester dans le palier gratuit.
+        </li>
+        <li>
+          <b>Soigner la sortie</b>
+          Construction d'un email HTML lisible partout, avec CSS en ligne (imposé par Gmail),
+          image, lieu, adresse, dates et lien direct vers chaque événement.
+        </li>
+        <li>
+          <b>Livrer</b>
+          Envoi via l'<strong>API Gmail</strong>. L'utilisateur n'a rien à faire : le résultat arrive
+          dans sa boîte mail.
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Les résultats</h2>
+      <div class="metrics">
+        <div class="metric">
+          <div class="value">0 €</div>
+          <div class="label">coût de fonctionnement mensuel</div>
+        </div>
+        <div class="metric">
+          <div class="value">1</div>
+          <div class="label">appel IA pour 5 descriptions générées</div>
+        </div>
+        <div class="metric">
+          <div class="value">6</div>
+          <div class="label">étapes automatisées, de bout en bout</div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Le résultat tient dans une contrainte :</strong> une génération de texte par IA
+        coûte normalement un appel par contenu. En regroupant les cinq événements dans un seul
+        prompt, le projet reste gratuit à l'usage — sans dégrader la personnalisation, puisque le
+        modèle reçoit le style artistique demandé par l'utilisateur.
+      </div>
+    </section>
+
+    <section>
+      <h2>Ce que j'en retiens</h2>
+      <ul>
+        <li>
+          <strong>Le coût est une décision de conception, pas une réflexion après coup.</strong>
+          Concevoir le prompt en fonction du palier gratuit a changé l'architecture du workflow,
+          pas seulement la facture.
+        </li>
+        <li>
+          <strong>La qualité des données d'entrée fait la qualité de la sortie.</strong> Sans
+          l'étape de déduplication, l'IA aurait rédigé avec soin cinq descriptions du même concert.
+        </li>
+        <li>
+          <strong>Un bon projet documente aussi ses limites.</strong> Savoir dire ce qui ne marche pas
+          encore est plus crédible que de prétendre que tout est parfait.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Limites connues et pistes</h2>
+      <ul class="limits">
+        <li>
+          Ticketmaster est une plateforme orientée concerts : les expositions y sont
+          sous-représentées. L'intégration de l'API <strong>Eventbrite</strong> comme seconde source
+          est la prochaine étape.
+        </li>
+        <li>
+          La déduplication se base sur le titre : un spectacle à l'affiche plusieurs jours peut
+          encore apparaître deux fois.
+        </li>
+        <li>
+          Gemini produit parfois une description générique sur un événement peu documenté. Piste :
+          scinder le workflow en <strong>deux appels</strong> — un pour la recherche d'informations
+          factuelles, un pour la rédaction personnalisée.
+        </li>
+      </ul>
+    </section>
+
+    <div class="footer-links">
+      <a class="btn btn-primary" href="https://github.com/tmoahs/Events-Curator">Voir le code sur GitHub</a>
+      <a class="btn btn-ghost" href="../index.html#projets">Autres projets</a>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div>Thomas Patout — Data Scientist · MLOps &amp; Automatisation IA</div>
+    <div>
+      <a href="mailto:t.patout@proton.me">t.patout@proton.me</a> ·
+      <a href="https://www.linkedin.com/in/thomas-patout/">LinkedIn</a> ·
+      <a href="https://github.com/tmoahs">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

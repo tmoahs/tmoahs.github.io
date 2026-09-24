@@ -1,0 +1,310 @@
+/* ============================================================
+   Portfolio — Thomas Patout
+   Feuille de style unique, sans dépendance externe.
+   ============================================================ */
+
+:root {
+  --ink: #16202b;
+  --mid: #4a5568;
+  --light: #8a94a6;
+  --accent: #2b4a7a;
+  --accent2: #1a6b5a;
+  --soft: #f6f8fb;
+  --rule: #e3e8ef;
+  --radius: 12px;
+  --max: 880px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: #fff;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Barre de navigation ---------- */
+
+.nav {
+  border-bottom: 1px solid var(--rule);
+  padding: 18px 0;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.nav .brand { font-weight: 700; font-size: 15px; letter-spacing: -0.2px; color: var(--ink); }
+.nav .brand span { color: var(--accent); }
+
+.nav ul { display: flex; gap: 20px; list-style: none; }
+.nav ul a { font-size: 14px; color: var(--mid); font-weight: 500; }
+.nav ul a:hover { color: var(--accent); text-decoration: none; }
+
+/* ---------- En-tête ---------- */
+
+.hero { padding: 72px 0 56px; }
+
+.hero .eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 46px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.hero .lede {
+  font-size: 19px;
+  color: var(--mid);
+  max-width: 660px;
+}
+
+.hero .lede strong { color: var(--ink); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+.btn {
+  display: inline-block;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #23406a; text-decoration: none; }
+
+.btn-ghost { background: #fff; color: var(--accent); border-color: var(--rule); }
+.btn-ghost:hover { background: var(--soft); text-decoration: none; }
+
+/* ---------- Sections ---------- */
+
+section { padding: 8px 0 40px; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 10px;
+  margin-bottom: 28px;
+}
+
+.section-head h2 { font-size: 15px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); }
+
+/* ---------- Cartes de projet ---------- */
+
+.cards { display: grid; gap: 18px; }
+
+.card {
+  display: block;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  color: inherit;
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.card:hover {
+  border-color: #c7d2e0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 32, 43, .07);
+  text-decoration: none;
+}
+
+.card .tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .4px;
+  color: var(--accent2);
+  background: #e8f5f1;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.card h3 { font-size: 21px; letter-spacing: -.3px; margin-bottom: 8px; }
+
+.card p { color: var(--mid); font-size: 15.5px; }
+
+.card .result {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--rule);
+  font-size: 14px;
+  color: var(--mid);
+}
+
+.card .result strong { color: var(--accent); }
+
+.card .more { display: inline-block; margin-top: 14px; font-size: 14.5px; font-weight: 600; color: var(--accent); }
+
+/* ---------- Étude de cas ---------- */
+
+.article { padding: 48px 0 72px; }
+
+.back { font-size: 14px; color: var(--light); display: inline-block; margin-bottom: 28px; }
+.back:hover { color: var(--accent); text-decoration: none; }
+
+.article h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; letter-spacing: -.8px; margin-bottom: 16px; }
+
+.article .lede { font-size: 18.5px; color: var(--mid); margin-bottom: 20px; max-width: 700px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+
+.tags span {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--mid);
+  background: var(--soft);
+  border: 1px solid var(--rule);
+  padding: 4px 11px;
+  border-radius: 20px;
+}
+
+.article section { padding: 0 0 42px; }
+
+.article h2 {
+  font-size: 22px;
+  letter-spacing: -.4px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+.article p + p { margin-top: 14px; }
+.article p { color: #2c3843; }
+
+.article ul, .article ol { margin: 14px 0 0 22px; }
+.article li { margin-bottom: 9px; color: #2c3843; }
+.article li strong { color: var(--ink); }
+
+/* Étapes numérotées */
+
+.steps { list-style: none; margin-left: 0; counter-reset: step; }
+
+.steps li {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 20px;
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.steps li b { display: block; color: var(--ink); }
+
+/* Métriques */
+
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-top: 8px; }
+
+.metric {
+  background: var(--soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+}
+
+.metric .value { font-size: 27px; font-weight: 700; color: var(--accent); letter-spacing: -.8px; }
+.metric .label { font-size: 13px; color: var(--mid); margin-top: 6px; line-height: 1.35; }
+
+/* Encadré */
+
+.callout {
+  background: var(--soft);
+  border-left: 3px solid var(--accent2);
+  border-radius: 0 8px 8px 0;
+  padding: 18px 22px;
+  margin-top: 20px;
+  font-size: 16px;
+  color: var(--mid);
+}
+
+.callout strong { color: var(--ink); }
+
+/* Limites / pistes */
+
+.limits { list-style: none; margin-left: 0; }
+.limits li { position: relative; padding-left: 22px; }
+.limits li::before { content: "→"; position: absolute; left: 0; color: var(--accent2); font-weight: 700; }
+
+/* Pied d'article */
+
+.article .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- Pied de page ---------- */
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 34px 0 46px;
+  font-size: 14px;
+  color: var(--light);
+}
+
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+footer a { color: var(--mid); }
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .hero { padding: 48px 0 36px; }
+  .nav ul { gap: 14px; }
+  .nav ul a { font-size: 13px; }
+  .card { padding: 22px; }
+  .article { padding: 32px 0 56px; }
+}

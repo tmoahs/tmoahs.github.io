@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipeline Big Data AgriTech sur AWS · Thomas Patout</title>
+<meta name="description" content="Étude de cas : pipeline de feature engineering scalable sur AWS EMR et PySpark — transfer learning MobileNetV2 en Pandas UDF, PCA et stockage Parquet sur S3.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand">Thomas <span>Patout</span></div>
+    <ul>
+      <li><a href="../index.html#projets">Projets</a></li>
+      <li><a href="../assets/cv-thomas-patout.pdf">CV</a></li>
+      <li><a href="https://www.linkedin.com/in/thomas-patout/">LinkedIn</a></li>
+      <li><a href="https://github.com/tmoahs">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="article">
+  <div class="wrap">
+
+    <a class="back" href="../index.html#projets">← Toutes les études de cas</a>
+
+    <h1>Pipeline Big Data AgriTech sur AWS</h1>
+    <p class="lede">
+      Poser les fondations d'une architecture capable d'absorber une croissance forte du volume
+      d'images — sans avoir à la réécrire dans six mois. Un exercice d'ingénierie autant que de
+      machine learning.
+    </p>
+
+    <div class="tags">
+      <span>AWS EMR</span>
+      <span>Amazon S3</span>
+      <span>PySpark</span>
+      <span>Pandas UDF</span>
+      <span>MobileNetV2</span>
+      <span>PCA</span>
+      <span>Parquet</span>
+      <span>RGPD</span>
+    </div>
+
+    <section>
+      <h2>Le problème</h2>
+      <p>
+        Une start-up AgriTech développe des robots cueilleurs intelligents. Première brique : une
+        application mobile qui identifie un fruit à partir d'une photo. Les images collectées
+        serviront à entraîner le futur moteur de classification.
+      </p>
+      <p>
+        Le volume d'images va augmenter très rapidement. Le vrai enjeu n'était donc pas de coder un
+        modèle, mais de <strong>bâtir une chaîne de traitement qui tienne la montée en charge</strong> :
+        un pipeline qui peut passer de quelques milliers à plusieurs millions d'images sans être
+        refait de zéro.
+      </p>
+    </section>
+
+    <section>
+      <h2>La démarche</h2>
+      <ol class="steps">
+        <li>
+          <b>Concevoir l'architecture avant de coder</b>
+          Un choix « cloud-native », de bout en bout : les images brutes sont lues depuis
+          <strong>Amazon S3</strong>, traitées sur un cluster <strong>AWS EMR</strong>, et les
+          caractéristiques extraites sont réécrites sur S3. Aucun stockage intermédiaire local,
+          donc aucune limite de taille.
+        </li>
+        <li>
+          <b>Extraire des caractéristiques sans réentraîner un modèle</b>
+          Utilisation du <strong>transfer learning</strong> avec <strong>MobileNetV2</strong> : un
+          réseau déjà entraîné sur des millions d'images sert à transformer chaque photo en un
+          vecteur de caractéristiques utile. On réutilise, on ne repart pas de zéro.
+        </li>
+        <li>
+          <b>Éviter le coût caché du transfert de modèle</b>
+          Sur un cluster, chaque nœud exécute ses tâches en parallèle. Sans précaution, chaque
+          worker recharge le réseau de neurones — un gaspillage massif de mémoire et de temps.
+          La solution : le <strong>broadcast</strong>, qui diffuse les poids du modèle une seule
+          fois vers tous les nœuds.
+        </li>
+        <li>
+          <b>Paralléliser l'inférence image</b>
+          Le traitement des images est distribué via des <strong>Pandas UDF</strong> : des fonctions
+          Python optimisées, exécutées en parallèle sur l'ensemble du cluster plutôt qu'en boucle.
+        </li>
+        <li>
+          <b>Réduire la dimension pour optimiser le stockage</b>
+          Les vecteurs produits par MobileNetV2 comptent 1280 dimensions. Une
+          <strong>PCA avec PySpark ML</strong> les ramène à <strong>100 composantes</strong>, en
+          conservant l'essentiel de l'information — donc bien moins de données à stocker et à lire.
+        </li>
+        <li>
+          <b>Stocker au bon format</b>
+          Écriture en <strong>Parquet</strong>, un format colonnaire compressé : on ne lit que les
+          colonnes nécessaires, ce qui accélère fortement les analyses en aval par rapport à du CSV.
+        </li>
+        <li>
+          <b>Intégrer les contraintes de coût et de conformité</b>
+          Analyse critique des coûts et des performances du cluster, avec des recommandations pour
+          la mise en production (Auto Scaling, instances Spot, monitoring). Les serveurs S3 et EMR
+          sont configurés <strong>en Europe</strong> pour respecter le RGPD.
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Les résultats</h2>
+      <div class="metrics">
+        <div class="metric">
+          <div class="value">1280 → 100</div>
+          <div class="label">composantes après réduction PCA</div>
+        </div>
+        <div class="metric">
+          <div class="value">S3 → EMR → S3</div>
+          <div class="label">pipeline scalable, sans stockage local</div>
+        </div>
+        <div class="metric">
+          <div class="value">Europe</div>
+          <div class="label">localisation des serveurs (conformité RGPD)</div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Le pipeline ne dépend pas de la taille des données.</strong> Passer de 10 000 à
+        10 millions d'images se traduit par l'ajout de nœuds au cluster, pas par une réécriture du
+        code — c'est tout l'intérêt d'avoir posé l'architecture dès le départ.
+      </div>
+    </section>
+
+    <section>
+      <h2>Ce que j'en retiens</h2>
+      <ul>
+        <li>
+          <strong>En Spark, deux détails changent tout : le broadcast et les Pandas UDF.</strong>
+          Sans eux, on paie le coût de transfert du modèle sur chaque nœud et on perd le bénéfice
+          du parallélisme. Ce sont des optimisations invisibles dans le résultat, mais visibles
+          dans la facture.
+        </li>
+        <li>
+          <strong>Réduire la dimension n'est pas qu'une astuce de modélisation.</strong> Passer de
+          1280 à 100 composantes, c'est diviser par plus de dix le volume stocké et lu — un gain
+          direct sur le coût cloud.
+        </li>
+        <li>
+          <strong>Le coût et la conformité font partie de la conception.</strong> Choix de la région
+          des serveurs, Auto Scaling, instances Spot : ces décisions se prennent au moment de
+          l'architecture, pas à la fin du projet.
+        </li>
+      </ul>
+      <p class="callout">
+        <strong>Piste d'amélioration :</strong> le pipeline a été exécuté pour valider l'architecture.
+        En production, la prochaine étape serait de l'orchestrer (Airflow ou Step Functions) et
+        d'ajouter un monitoring de l'état du cluster et du coût par exécution.
+      </p>
+    </section>
+
+    <div class="footer-links">
+      <a class="btn btn-primary" href="https://github.com/tmoahs/Traitement-Big-Data">Voir le code sur GitHub</a>
+      <a class="btn btn-ghost" href="../index.html#projets">Autres projets</a>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div>Thomas Patout — Data Scientist · MLOps &amp; Automatisation IA</div>
+    <div>
+      <a href="mailto:t.patout@proton.me">t.patout@proton.me</a> ·
+      <a href="https://www.linkedin.com/in/thomas-patout/">LinkedIn</a> ·
+      <a href="https://github.com/tmoahs">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
