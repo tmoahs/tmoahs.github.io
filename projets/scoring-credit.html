@@ -28,8 +28,7 @@
 
     <h1>Scoring de crédit : de la donnée à la décision</h1>
     <p class="lede">
-      Un modèle qui reste dans un notebook ne sert à personne. Ce projet va jusqu'au bout :
-      un modèle optimisé sur le coût réel des erreurs, déployé, explicable, et surveillé
+      Ce projet va jusqu'au bout du cycle : un modèle optimisé sur le coût réel des erreurs, déployé, explicable, et surveillé
       en production.
     </p>
 
@@ -55,8 +54,7 @@
       <p>
         Un modèle classique, optimisé sur l'accuracy ou sur l'AUC seule, ignore cette asymétrie :
         il traite les deux types d'erreur comme équivalents. Or c'est l'inverse de ce dont
-        l'entreprise a besoin. La vraie question n'était donc pas « quel modèle prédit le mieux ? »,
-        mais <strong>« quel modèle coûte le moins cher ? »</strong>.
+        l'entreprise a besoin. La vraie question était donc la suivante : <strong>quel modèle coûte le moins cher ?</strong>
       </p>
     </section>
 
@@ -129,9 +127,9 @@
       <h2>Ce que j'en retiens</h2>
       <ul>
         <li>
-          <strong>Un modèle se juge sur son coût métier, pas sur son AUC.</strong> Deux modèles avec
+          <strong>Un modèle se juge sur son coût métier.</strong> Deux modèles avec
           la même AUC peuvent avoir des conséquences financières très différentes selon l'endroit où
-          l'on place le seuil. C'est le seuil qu'il faut optimiser, pas seulement l'algorithme.
+          l'on place le seuil. C'est donc le seuil qu'il faut optimiser en priorité.
         </li>
         <li>
           <strong>Un modèle n'a de valeur que s'il est utilisable par ceux qui décident.</strong>
@@ -139,14 +137,14 @@
           API que seul un data scientist saurait appeler.
         </li>
         <li>
-          <strong>Le monitoring n'est pas une option.</strong> Les données de production dérivent, et
+          <strong>Le monitoring fait partie du travail.</strong> Les données de production dérivent, et
           sans rapport de dérive on découvre le problème trop tard.
         </li>
       </ul>
       <p class="callout">
         <strong>Piste d'amélioration :</strong> la matrice de coûts qui définit le score métier reste
         une hypothèse. En conditions réelles, elle devrait être co-construite et validée par les
-        équipes risque. C'est un sujet de dialogue métier autant que de technique.
+        équipes risque. C'est un sujet de dialogue entre le métier et la technique.
       </p>
     </section>
 

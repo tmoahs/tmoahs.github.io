@@ -62,13 +62,13 @@
       <h2>La démarche</h2>
       <ol class="steps">
         <li>
-          <b>Partir du besoin, pas de la technique</b>
+          <b>Commencer par le besoin</b>
           Un formulaire minimal (ville, catégorie, style artistique), sans compte à créer ni
           application à installer. Le workflow est auto-porté par n8n : il n'y a donc aucun
           front-end à maintenir.
         </li>
         <li>
-          <b>Récupérer de vraies données, pas des données inventées</b>
+          <b>Utiliser de vraies données</b>
           Interrogation de l'<strong>API Ticketmaster</strong> pour obtenir 20 événements réels,
           avec leurs visuels, lieux, dates et liens officiels.
         </li>
@@ -80,8 +80,7 @@
         </li>
         <li>
           <b>Faire appel à l'IA sans exploser le budget</b>
-          C'est la décision structurante du projet : plutôt que d'appeler Google Gemini une fois par
-          événement (soit 5 appels), toutes les données sont agrégées et envoyées en <strong>un seul
+          C'est la décision structurante du projet : au lieu de faire 5 appels séparés à Google Gemini, toutes les données sont agrégées et envoyées en <strong>un seul
           appel qui génère les 5 descriptions</strong>. C'est ce qui permet de rester dans le palier
           gratuit.
         </li>
@@ -126,17 +125,15 @@
       <h2>Ce que j'en retiens</h2>
       <ul>
         <li>
-          <strong>Le coût est une décision de conception, pas une réflexion après coup.</strong>
-          Concevoir le prompt en fonction du palier gratuit a changé l'architecture du workflow,
-          pas seulement la facture.
+          <strong>Le coût se décide dès la conception.</strong>
+          Concevoir le prompt en fonction du palier gratuit a influencé l'architecture du workflow entier.
         </li>
         <li>
           <strong>La qualité des données d'entrée fait la qualité de la sortie.</strong> Sans
           l'étape de déduplication, l'IA aurait rédigé avec soin cinq descriptions du même concert.
         </li>
         <li>
-          <strong>Un bon projet documente aussi ses limites.</strong> Savoir dire ce qui ne marche
-          pas encore est plus crédible que de prétendre que tout est parfait.
+          <strong>Un bon projet documente aussi ses limites.</strong> Savoir dire ce qui ne marche pas encore rend le reste plus crédible.
         </li>
       </ul>
     </section>
