@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Cultural Events Curator — automatisation IA de bout en bout · Thomas Patout</title>
+<title>AI Cultural Events Curator : automatisation IA de bout en bout · Thomas Patout</title>
 <meta name="description" content="Étude de cas : workflow n8n qui combine l'API Ticketmaster et Google Gemini pour envoyer des recommandations culturelles personnalisées par email, pour un coût nul.">
 <link rel="stylesheet" href="../style.css">
 </head>
@@ -28,8 +28,8 @@
 
     <h1>AI Cultural Events Curator</h1>
     <p class="lede">
-      Un utilisateur décrit ses goûts, et reçoit dans sa boîte mail cinq événements culturels réels
-      de sa ville — chacun avec une description écrite pour lui. Le tout tourne
+      Un utilisateur décrit ses goûts et reçoit dans sa boîte mail cinq événements culturels réels
+      de sa ville, chacun avec une description écrite pour lui. Le tout tourne
       <strong>sans aucune infrastructure payante</strong>.
     </p>
 
@@ -46,14 +46,14 @@
     <section>
       <h2>Le problème</h2>
       <p>
-        Trouver une sortie culturelle qui corresponde vraiment à ses goûts demande du temps :
-        on ouvre plusieurs sites, on recoupe les annonces, on retombe sur les mêmes événements,
-        et on manque d'informations pour se décider. Les recommandations proposées sont soit
-        génériques, soit noyées dans du bruit.
+        Trouver une sortie culturelle qui corresponde vraiment à ses goûts demande du temps : on
+        ouvre plusieurs sites, on recoupe les annonces, on retombe sur les mêmes événements, et on
+        manque d'informations pour se décider. Les recommandations proposées sont soit génériques,
+        soit noyées dans du bruit.
       </p>
       <p>
         L'objectif était donc double : <strong>une recommandation réellement personnalisée</strong>,
-        et un <strong>coût d'exploitation nul</strong>. La contrainte de coût n'était pas un détail —
+        et un <strong>coût d'exploitation nul</strong>. La contrainte de coût n'était pas un détail,
         c'est elle qui a structuré toutes les décisions techniques.
       </p>
     </section>
@@ -63,9 +63,9 @@
       <ol class="steps">
         <li>
           <b>Partir du besoin, pas de la technique</b>
-          Un formulaire minimal — ville, catégorie, style artistique — sans compte à créer ni
-          application à installer. Le workflow est auto-porté par n8n, donc aucun front-end
-          à maintenir.
+          Un formulaire minimal (ville, catégorie, style artistique), sans compte à créer ni
+          application à installer. Le workflow est auto-porté par n8n : il n'y a donc aucun
+          front-end à maintenir.
         </li>
         <li>
           <b>Récupérer de vraies données, pas des données inventées</b>
@@ -75,13 +75,15 @@
         <li>
           <b>Dédupliquer pour garantir la variété</b>
           Sur 20 résultats, beaucoup se répètent ou se ressemblent. Un filtrage ramène l'ensemble
-          à <strong>5 événements réellement distincts</strong> — sinon l'email perd tout intérêt.
+          à <strong>5 événements réellement distincts</strong>. Sans cette étape, l'email perd
+          tout intérêt.
         </li>
         <li>
           <b>Faire appel à l'IA sans exploser le budget</b>
           C'est la décision structurante du projet : plutôt que d'appeler Google Gemini une fois par
-          événement (5 appels), toutes les données sont agrégées et envoyées en <strong>un seul appel
-          qui génère les 5 descriptions</strong>. C'est ce qui permet de rester dans le palier gratuit.
+          événement (soit 5 appels), toutes les données sont agrégées et envoyées en <strong>un seul
+          appel qui génère les 5 descriptions</strong>. C'est ce qui permet de rester dans le palier
+          gratuit.
         </li>
         <li>
           <b>Soigner la sortie</b>
@@ -90,8 +92,8 @@
         </li>
         <li>
           <b>Livrer</b>
-          Envoi via l'<strong>API Gmail</strong>. L'utilisateur n'a rien à faire : le résultat arrive
-          dans sa boîte mail.
+          Envoi via l'<strong>API Gmail</strong>. L'utilisateur n'a rien à faire, le résultat
+          arrive dans sa boîte mail.
         </li>
       </ol>
     </section>
@@ -113,9 +115,9 @@
         </div>
       </div>
       <div class="callout">
-        <strong>Le résultat tient dans une contrainte :</strong> une génération de texte par IA
-        coûte normalement un appel par contenu. En regroupant les cinq événements dans un seul
-        prompt, le projet reste gratuit à l'usage — sans dégrader la personnalisation, puisque le
+        <strong>Le résultat tient dans une contrainte :</strong> générer du texte par IA coûte
+        normalement un appel par contenu. En regroupant les cinq événements dans un seul prompt,
+        le projet reste gratuit à l'usage, tout en préservant la personnalisation, puisque le
         modèle reçoit le style artistique demandé par l'utilisateur.
       </div>
     </section>
@@ -133,8 +135,8 @@
           l'étape de déduplication, l'IA aurait rédigé avec soin cinq descriptions du même concert.
         </li>
         <li>
-          <strong>Un bon projet documente aussi ses limites.</strong> Savoir dire ce qui ne marche pas
-          encore est plus crédible que de prétendre que tout est parfait.
+          <strong>Un bon projet documente aussi ses limites.</strong> Savoir dire ce qui ne marche
+          pas encore est plus crédible que de prétendre que tout est parfait.
         </li>
       </ul>
     </section>
@@ -148,12 +150,12 @@
           est la prochaine étape.
         </li>
         <li>
-          La déduplication se base sur le titre : un spectacle à l'affiche plusieurs jours peut
+          La déduplication se base sur le titre, donc un spectacle à l'affiche plusieurs jours peut
           encore apparaître deux fois.
         </li>
         <li>
           Gemini produit parfois une description générique sur un événement peu documenté. Piste :
-          scinder le workflow en <strong>deux appels</strong> — un pour la recherche d'informations
+          scinder le workflow en <strong>deux appels</strong>, un pour la recherche d'informations
           factuelles, un pour la rédaction personnalisée.
         </li>
       </ul>
@@ -169,7 +171,7 @@
 
 <footer>
   <div class="wrap">
-    <div>Thomas Patout — Data Scientist · MLOps &amp; Automatisation IA</div>
+    <div>Thomas Patout · Data Scientist · MLOps &amp; Automatisation IA</div>
     <div>
       <a href="mailto:t.patout@proton.me">t.patout@proton.me</a> ·
       <a href="https://www.linkedin.com/in/thomas-patout/">LinkedIn</a> ·

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scoring de crédit — de la donnée à la décision · Thomas Patout</title>
+<title>Scoring de crédit : de la donnée à la décision · Thomas Patout</title>
 <meta name="description" content="Étude de cas : modèle LightGBM de scoring de crédit optimisé sur un score métier, déployé via FastAPI, Docker et un dashboard Streamlit avec interprétabilité SHAP.">
 <link rel="stylesheet" href="../style.css">
 </head>
@@ -26,10 +26,11 @@
 
     <a class="back" href="../index.html#projets">← Toutes les études de cas</a>
 
-    <h1>Scoring de crédit — de la donnée à la décision</h1>
+    <h1>Scoring de crédit : de la donnée à la décision</h1>
     <p class="lede">
       Un modèle qui reste dans un notebook ne sert à personne. Ce projet va jusqu'au bout :
-      un modèle optimisé sur le coût réel des erreurs, déployé, explicable, et surveillé en production.
+      un modèle optimisé sur le coût réel des erreurs, déployé, explicable, et surveillé
+      en production.
     </p>
 
     <div class="tags">
@@ -53,8 +54,8 @@
       </p>
       <p>
         Un modèle classique, optimisé sur l'accuracy ou sur l'AUC seule, ignore cette asymétrie :
-        il traite les deux types d'erreur comme équivalents. Or c'est exactement l'inverse de ce
-        dont l'entreprise a besoin. Le vrai sujet n'était donc pas « quel modèle prédit le mieux ? »
+        il traite les deux types d'erreur comme équivalents. Or c'est l'inverse de ce dont
+        l'entreprise a besoin. La vraie question n'était donc pas « quel modèle prédit le mieux ? »,
         mais <strong>« quel modèle coûte le moins cher ? »</strong>.
       </p>
     </section>
@@ -71,13 +72,14 @@
         <li>
           <b>Comparer plusieurs modèles</b>
           Évaluation de plusieurs algorithmes sur les mêmes données, puis sélection d'un
-          <strong>LightGBM</strong> pour son rapport performance / temps d'entraînement / interprétabilité.
+          <strong>LightGBM</strong> pour son rapport performance, temps d'entraînement et
+          interprétabilité.
         </li>
         <li>
           <b>Traduire le problème en langage métier</b>
           Définition d'un <strong>score métier</strong> : une fonction de coût qui pondère différemment
-          un faux positif et un faux négatif. Le <strong>seuil de décision est ensuite optimisé sur ce
-          coût</strong>, et non fixé à 0,5 comme par défaut.
+          un faux positif et un faux négatif. Le <strong>seuil de décision est ensuite optimisé sur
+          ce coût</strong>, et non fixé à 0,5 comme par défaut.
         </li>
         <li>
           <b>Rendre chaque décision explicable</b>
@@ -88,14 +90,14 @@
         </li>
         <li>
           <b>Déployer pour de vrai</b>
-          API <strong>FastAPI</strong> conteneurisée avec <strong>Docker</strong>, tests automatisés et
-          pipeline <strong>CI/CD</strong>. Le dashboard consomme cette API, ce qui garantit une seule
-          source de vérité pour le calcul du score.
+          API <strong>FastAPI</strong> conteneurisée avec <strong>Docker</strong>, tests automatisés
+          et pipeline <strong>CI/CD</strong>. Le dashboard consomme cette API, ce qui garantit une
+          seule source de vérité pour le calcul du score.
         </li>
         <li>
           <b>Surveiller après la mise en production</b>
           Suivi des expériences avec <strong>MLflow</strong> et génération d'un rapport de dérive des
-          données avec <strong>Evidently AI</strong> : un modèle se dégrade, il faut pouvoir le détecter.
+          données avec <strong>Evidently AI</strong>. Un modèle se dégrade, il faut pouvoir le détecter.
         </li>
       </ol>
     </section>
@@ -118,8 +120,8 @@
       </div>
       <div class="callout">
         <strong>La décision est explicable.</strong> Pour chaque dossier, le chargé de clientèle voit
-        quels facteurs ont pesé — ce qui rend le refus défendable face à un client, et conforme aux
-        exigences de transparence sur les décisions automatisées.
+        quels facteurs ont pesé. C'est ce qui rend un refus défendable face à un client, et conforme
+        aux exigences de transparence sur les décisions automatisées.
       </div>
     </section>
 
@@ -133,18 +135,18 @@
         </li>
         <li>
           <strong>Un modèle n'a de valeur que s'il est utilisable par ceux qui décident.</strong>
-          D'où le dashboard pensé pour des non-techniciens et la simulation « et si ? » — pas une
+          D'où le dashboard pensé pour des non-techniciens et la simulation « et si ? », plutôt qu'une
           API que seul un data scientist saurait appeler.
         </li>
         <li>
-          <strong>Le monitoring n'est pas une option.</strong> Les données de production dérivent ;
-          sans rapport de dérive, on découvre le problème trop tard.
+          <strong>Le monitoring n'est pas une option.</strong> Les données de production dérivent, et
+          sans rapport de dérive on découvre le problème trop tard.
         </li>
       </ul>
       <p class="callout">
         <strong>Piste d'amélioration :</strong> la matrice de coûts qui définit le score métier reste
         une hypothèse. En conditions réelles, elle devrait être co-construite et validée par les
-        équipes risque — c'est un sujet de dialogue métier autant que de technique.
+        équipes risque. C'est un sujet de dialogue métier autant que de technique.
       </p>
     </section>
 
@@ -159,7 +161,7 @@
 
 <footer>
   <div class="wrap">
-    <div>Thomas Patout — Data Scientist · MLOps &amp; Automatisation IA</div>
+    <div>Thomas Patout · Data Scientist · MLOps &amp; Automatisation IA</div>
     <div>
       <a href="mailto:t.patout@proton.me">t.patout@proton.me</a> ·
       <a href="https://www.linkedin.com/in/thomas-patout/">LinkedIn</a> ·

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pipeline Big Data AgriTech sur AWS · Thomas Patout</title>
-<meta name="description" content="Étude de cas : pipeline de feature engineering scalable sur AWS EMR et PySpark — transfer learning MobileNetV2 en Pandas UDF, PCA et stockage Parquet sur S3.">
+<meta name="description" content="Étude de cas : pipeline de feature engineering scalable sur AWS EMR et PySpark, avec transfer learning MobileNetV2 en Pandas UDF, PCA et stockage Parquet sur S3.">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -28,8 +28,8 @@
 
     <h1>Pipeline Big Data AgriTech sur AWS</h1>
     <p class="lede">
-      Poser les fondations d'une architecture capable d'absorber une croissance forte du volume
-      d'images — sans avoir à la réécrire dans six mois. Un exercice d'ingénierie autant que de
+      Poser les fondations d'une architecture capable d'absorber une forte croissance du volume
+      d'images, sans avoir à la réécrire dans six mois. Un exercice d'ingénierie autant que de
       machine learning.
     </p>
 
@@ -54,7 +54,7 @@
       <p>
         Le volume d'images va augmenter très rapidement. Le vrai enjeu n'était donc pas de coder un
         modèle, mais de <strong>bâtir une chaîne de traitement qui tienne la montée en charge</strong> :
-        un pipeline qui peut passer de quelques milliers à plusieurs millions d'images sans être
+        un pipeline capable de passer de quelques milliers à plusieurs millions d'images sans être
         refait de zéro.
       </p>
     </section>
@@ -78,9 +78,9 @@
         <li>
           <b>Éviter le coût caché du transfert de modèle</b>
           Sur un cluster, chaque nœud exécute ses tâches en parallèle. Sans précaution, chaque
-          worker recharge le réseau de neurones — un gaspillage massif de mémoire et de temps.
-          La solution : le <strong>broadcast</strong>, qui diffuse les poids du modèle une seule
-          fois vers tous les nœuds.
+          worker recharge le réseau de neurones, ce qui représente un gaspillage massif de mémoire
+          et de temps. La solution : le <strong>broadcast</strong>, qui diffuse les poids du modèle
+          une seule fois vers tous les nœuds.
         </li>
         <li>
           <b>Paralléliser l'inférence image</b>
@@ -91,7 +91,7 @@
           <b>Réduire la dimension pour optimiser le stockage</b>
           Les vecteurs produits par MobileNetV2 comptent 1280 dimensions. Une
           <strong>PCA avec PySpark ML</strong> les ramène à <strong>100 composantes</strong>, en
-          conservant l'essentiel de l'information — donc bien moins de données à stocker et à lire.
+          conservant l'essentiel de l'information, donc bien moins de données à stocker et à lire.
         </li>
         <li>
           <b>Stocker au bon format</b>
@@ -126,7 +126,7 @@
       <div class="callout">
         <strong>Le pipeline ne dépend pas de la taille des données.</strong> Passer de 10 000 à
         10 millions d'images se traduit par l'ajout de nœuds au cluster, pas par une réécriture du
-        code — c'est tout l'intérêt d'avoir posé l'architecture dès le départ.
+        code. C'est tout l'intérêt d'avoir posé l'architecture dès le départ.
       </div>
     </section>
 
@@ -141,7 +141,7 @@
         </li>
         <li>
           <strong>Réduire la dimension n'est pas qu'une astuce de modélisation.</strong> Passer de
-          1280 à 100 composantes, c'est diviser par plus de dix le volume stocké et lu — un gain
+          1280 à 100 composantes, c'est diviser par plus de dix le volume stocké et lu, un gain
           direct sur le coût cloud.
         </li>
         <li>
@@ -167,7 +167,7 @@
 
 <footer>
   <div class="wrap">
-    <div>Thomas Patout — Data Scientist · MLOps &amp; Automatisation IA</div>
+    <div>Thomas Patout · Data Scientist · MLOps &amp; Automatisation IA</div>
     <div>
       <a href="mailto:t.patout@proton.me">t.patout@proton.me</a> ·
       <a href="https://www.linkedin.com/in/thomas-patout/">LinkedIn</a> ·
