@@ -63,9 +63,7 @@
       <ol class="steps">
         <li>
           <b>Concevoir l'architecture avant de coder</b>
-          Un choix « cloud-native », de bout en bout : les images brutes sont lues depuis
-          <strong>Amazon S3</strong>, traitées sur un cluster <strong>AWS EMR</strong>, et les
-          caractéristiques extraites sont réécrites sur S3. Aucun stockage intermédiaire local,
+          Un choix « cloud-native », de bout en bout : les images brutes sont lues depuis <strong>Amazon S3</strong>, traitées sur un cluster <strong>AWS EMR</strong>, puis réécrites sur S3. Aucun stockage intermédiaire local,
           donc aucune limite de taille.
         </li>
         <li>
@@ -143,8 +141,7 @@
           direct sur le coût cloud.
         </li>
         <li>
-          <strong>Le coût et la conformité font partie de la conception.</strong> Choix de la région
-          des serveurs, Auto Scaling, instances Spot : ces décisions se prennent au moment de l'architecture.
+          <strong>Le coût et la conformité font partie de la conception.</strong> La région des serveurs, l'Auto Scaling ou les instances Spot se décident au moment de l'architecture.
         </li>
       </ul>
       <p class="callout">

@@ -28,8 +28,7 @@
 
     <h1>Scoring de crédit : de la donnée à la décision</h1>
     <p class="lede">
-      Ce projet va jusqu'au bout du cycle : un modèle optimisé sur le coût réel des erreurs, déployé, explicable, et surveillé
-      en production.
+      Ce projet va jusqu'au bout du cycle : un modèle optimisé sur le coût réel des erreurs, déployé et explicable, avec un monitoring en production.
     </p>
 
     <div class="tags">
@@ -63,15 +62,14 @@
       <ol class="steps">
         <li>
           <b>Explorer et préparer les données</b>
-          Analyse exploratoire, feature engineering, et gestion d'un fort déséquilibre de classes
+          Analyse exploratoire, feature engineering, puis gestion d'un fort déséquilibre de classes
           entre bons et mauvais payeurs. Les variables préparées sont stockées dans une base SQLite
           qui sert de <em>feature store</em> commun à l'API et au dashboard.
         </li>
         <li>
           <b>Comparer plusieurs modèles</b>
           Évaluation de plusieurs algorithmes sur les mêmes données, puis sélection d'un
-          <strong>LightGBM</strong> pour son rapport performance, temps d'entraînement et
-          interprétabilité.
+          <strong>LightGBM</strong> pour son rapport entre performance et temps d'entraînement, et pour son interprétabilité.
         </li>
         <li>
           <b>Traduire le problème en langage métier</b>
@@ -83,7 +81,7 @@
           <b>Rendre chaque décision explicable</b>
           Calcul de valeurs <strong>SHAP</strong> locales et globales. Le dashboard Streamlit affiche,
           pour chaque client, les facteurs qui pèsent le plus dans la décision, une jauge de risque,
-          une comparaison au reste de la clientèle, et une simulation « et si ? » pour tester un
+          une comparaison au reste de la clientèle et une simulation « et si ? » pour tester un
           changement de situation.
         </li>
         <li>
